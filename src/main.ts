@@ -18,3 +18,8 @@ button.addEventListener("click", () => {
   counter++;
   counterDiv.textContent = `${counter} launches`;
 });
+
+setInterval(() => {
+  counter++;
+  counterDiv.textContent = `${counter} launches`;
+}, 1000);
