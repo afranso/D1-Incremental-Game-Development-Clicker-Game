@@ -21,9 +21,9 @@ rateDiv.textContent = `Growth rate: ${growthRate.toFixed(2)} launches/sec`;
 document.body.appendChild(rateDiv);
 
 const upgrades = [
-  { name: "A", cost: 10, rate: 0.1, count: 0 },
-  { name: "B", cost: 100, rate: 2.0, count: 0 },
-  { name: "C", cost: 1000, rate: 50.0, count: 0 },
+  { name: "A", baseCost: 10, cost: 10, rate: 0.1, count: 0 },
+  { name: "B", baseCost: 100, cost: 100, rate: 2.0, count: 0 },
+  { name: "C", baseCost: 1000, cost: 1000, rate: 50.0, count: 0 },
 ];
 
 const upgradeButtons: HTMLButtonElement[] = [];
@@ -31,7 +31,9 @@ const upgradeStatus: HTMLDivElement[] = [];
 
 upgrades.forEach((u) => {
   const btn = document.createElement("button");
-  btn.textContent = `Buy ${u.name} (${u.cost} launches, +${u.rate}/sec)`;
+  btn.textContent = `Buy ${u.name} (${
+    u.cost.toFixed(2)
+  } launches, +${u.rate}/sec)`;
   btn.disabled = true;
   document.body.appendChild(btn);
   upgradeButtons.push(btn);
@@ -46,11 +48,15 @@ upgrades.forEach((u) => {
       counter -= u.cost;
       u.count++;
       growthRate += u.rate;
+      u.cost *= 1.15;
       counterDiv.textContent = `${counter.toFixed(2)} launches`;
       rateDiv.textContent = `Growth rate: ${
         growthRate.toFixed(2)
       } launches/sec`;
       status.textContent = `${u.name}: ${u.count} owned`;
+      btn.textContent = `Buy ${u.name} (${
+        u.cost.toFixed(2)
+      } launches, +${u.rate}/sec)`;
     }
   });
 });
