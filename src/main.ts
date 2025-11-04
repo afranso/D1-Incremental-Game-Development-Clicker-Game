@@ -52,16 +52,16 @@ document.body.innerHTML = `
   <p>Example image asset: <img src="${exampleIconUrl}" class="icon" /></p>
 `;
 
-const harvestButton = document.createElement("button");
-harvestButton.textContent = "🌾 Harvest!";
-document.body.appendChild(harvestButton);
+const generateButton = document.createElement("button");
+generateButton.textContent = "🌾 Harvest!";
+document.body.appendChild(generateButton);
 
-let crops = 0;
+let resource = 0;
 let growthRate = 0;
 
-const cropsDiv = document.createElement("div");
-cropsDiv.textContent = `${crops.toFixed(2)} crops harvested`;
-document.body.appendChild(cropsDiv);
+const resourceDisplay = document.createElement("div");
+resourceDisplay.textContent = `${resource.toFixed(2)} crops harvested`;
+document.body.appendChild(resourceDisplay);
 
 const rateDiv = document.createElement("div");
 rateDiv.textContent = `Growth rate: ${growthRate.toFixed(2)} crops/sec`;
@@ -91,12 +91,12 @@ for (const item of availableItems) {
   upgradeStatus.push(status);
 
   btn.addEventListener("click", () => {
-    if (crops >= item.cost) {
-      crops -= item.cost;
+    if (resource >= item.cost) {
+      resource -= item.cost;
       item.count++;
       growthRate += item.rate;
       item.cost *= 1.15;
-      cropsDiv.textContent = `${crops.toFixed(2)} crops harvested`;
+      resourceDisplay.textContent = `${resource.toFixed(2)} crops harvested`;
       rateDiv.textContent = `Growth rate: ${growthRate.toFixed(2)} crops/sec`;
       status.textContent = `${item.name}s owned: ${item.count}`;
       btn.textContent = `Buy ${item.name} (${
@@ -106,21 +106,21 @@ for (const item of availableItems) {
   });
 }
 
-harvestButton.addEventListener("click", () => {
-  crops++;
-  cropsDiv.textContent = `${crops.toFixed(2)} crops harvested`;
+generateButton.addEventListener("click", () => {
+  resource++;
+  resourceDisplay.textContent = `${resource.toFixed(2)} crops harvested`;
 });
 
 let lastTime = performance.now();
 
 function update(time: number) {
   const delta = (time - lastTime) / 1000;
-  crops += growthRate * delta;
-  cropsDiv.textContent = `${crops.toFixed(2)} crops harvested`;
+  resource += growthRate * delta;
+  resourceDisplay.textContent = `${resource.toFixed(2)} crops harvested`;
   rateDiv.textContent = `Growth rate: ${growthRate.toFixed(2)} crops/sec`;
 
   for (let i = 0; i < availableItems.length; i++) {
-    upgradeButtons[i].disabled = crops < availableItems[i].cost;
+    upgradeButtons[i].disabled = resource < availableItems[i].cost;
   }
 
   lastTime = time;
