@@ -5,32 +5,59 @@ document.body.innerHTML = `
   <p>Example image asset: <img src="${exampleIconUrl}" class="icon" /></p>
 `;
 
-const button = document.createElement("button");
-button.textContent = "🚀";
-document.body.appendChild(button);
+const launchButton = document.createElement("button");
+launchButton.textContent = "🚀";
+document.body.appendChild(launchButton);
 
-let counter: number = 0;
-let growthRate: number = 0;
+let counter = 0;
+let growthRate = 0;
+
 const counterDiv = document.createElement("div");
 counterDiv.textContent = `${counter.toFixed(2)} launches`;
 document.body.appendChild(counterDiv);
 
-const upgradeButton = document.createElement("button");
-upgradeButton.textContent = "🛒 Buy Upgrade (10 launches)";
-upgradeButton.disabled = true;
-document.body.appendChild(upgradeButton);
+const rateDiv = document.createElement("div");
+rateDiv.textContent = `Growth rate: ${growthRate.toFixed(2)} launches/sec`;
+document.body.appendChild(rateDiv);
 
-button.addEventListener("click", () => {
-  counter++;
-  counterDiv.textContent = `${counter.toFixed(2)} launches`;
+const upgrades = [
+  { name: "A", cost: 10, rate: 0.1, count: 0 },
+  { name: "B", cost: 100, rate: 2.0, count: 0 },
+  { name: "C", cost: 1000, rate: 50.0, count: 0 },
+];
+
+const upgradeButtons: HTMLButtonElement[] = [];
+const upgradeStatus: HTMLDivElement[] = [];
+
+upgrades.forEach((u) => {
+  const btn = document.createElement("button");
+  btn.textContent = `Buy ${u.name} (${u.cost} launches, +${u.rate}/sec)`;
+  btn.disabled = true;
+  document.body.appendChild(btn);
+  upgradeButtons.push(btn);
+
+  const status = document.createElement("div");
+  status.textContent = `${u.name}: ${u.count} owned`;
+  document.body.appendChild(status);
+  upgradeStatus.push(status);
+
+  btn.addEventListener("click", () => {
+    if (counter >= u.cost) {
+      counter -= u.cost;
+      u.count++;
+      growthRate += u.rate;
+      counterDiv.textContent = `${counter.toFixed(2)} launches`;
+      rateDiv.textContent = `Growth rate: ${
+        growthRate.toFixed(2)
+      } launches/sec`;
+      status.textContent = `${u.name}: ${u.count} owned`;
+    }
+  });
 });
 
-upgradeButton.addEventListener("click", () => {
-  if (counter >= 10) {
-    counter -= 10;
-    growthRate += 1;
-    counterDiv.textContent = `${counter.toFixed(2)} launches`;
-  }
+launchButton.addEventListener("click", () => {
+  counter++;
+  counterDiv.textContent = `${counter.toFixed(2)} launches`;
 });
 
 let lastTime = performance.now();
@@ -39,7 +66,10 @@ function update(time: number) {
   const delta = (time - lastTime) / 1000;
   counter += growthRate * delta;
   counterDiv.textContent = `${counter.toFixed(2)} launches`;
-  upgradeButton.disabled = counter < 10;
+  rateDiv.textContent = `Growth rate: ${growthRate.toFixed(2)} launches/sec`;
+  upgrades.forEach((u, i) => {
+    upgradeButtons[i].disabled = counter < u.cost;
+  });
   lastTime = time;
   requestAnimationFrame(update);
 }
