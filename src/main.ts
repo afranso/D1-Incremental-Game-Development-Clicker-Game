@@ -6,12 +6,46 @@ interface Item {
   cost: number;
   rate: number;
   count: number;
+  description: string;
 }
 
 const availableItems: Item[] = [
-  { name: "Tractor", cost: 10, rate: 0.1, count: 0 },
-  { name: "Barn", cost: 100, rate: 2.0, count: 0 },
-  { name: "Farmhouse", cost: 1000, rate: 50.0, count: 0 },
+  {
+    name: "Tractor",
+    cost: 10,
+    rate: 0.1,
+    count: 0,
+    description: "A small tractor that helps plow fields automatically.",
+  },
+  {
+    name: "Barn",
+    cost: 100,
+    rate: 2.0,
+    count: 0,
+    description: "A sturdy barn to store and protect your harvest.",
+  },
+  {
+    name: "Farmhouse",
+    cost: 1000,
+    rate: 50.0,
+    count: 0,
+    description:
+      "A farmhouse full of experienced farmers who boost efficiency.",
+  },
+  {
+    name: "Windmill",
+    cost: 5000,
+    rate: 120.0,
+    count: 0,
+    description: "Generates steady energy to process crops faster.",
+  },
+  {
+    name: "Greenhouse",
+    cost: 20000,
+    rate: 400.0,
+    count: 0,
+    description: "Grows high-value crops year-round, rain or shine.",
+  },
 ];
 
 document.body.innerHTML = `
@@ -48,6 +82,12 @@ for (const item of availableItems) {
   const status = document.createElement("div");
   status.textContent = `${item.name}s owned: ${item.count}`;
   document.body.appendChild(status);
+
+  const desc = document.createElement("div");
+  desc.textContent = item.description;
+  desc.className = "description";
+  document.body.appendChild(desc);
+
   upgradeStatus.push(status);
 
   btn.addEventListener("click", () => {
