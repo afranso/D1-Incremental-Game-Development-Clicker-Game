@@ -11,15 +11,22 @@ document.body.appendChild(button);
 
 let counter: number = 0;
 const counterDiv = document.createElement("div");
-counterDiv.textContent = `${counter} launches`;
+counterDiv.textContent = `${counter.toFixed(2)} launches`;
 document.body.appendChild(counterDiv);
 
 button.addEventListener("click", () => {
   counter++;
-  counterDiv.textContent = `${counter} launches`;
+  counterDiv.textContent = `${counter.toFixed(2)} launches`;
 });
 
-setInterval(() => {
-  counter++;
-  counterDiv.textContent = `${counter} launches`;
-}, 1000);
+let lastTime = performance.now();
+
+function update(time: number) {
+  const delta = (time - lastTime) / 1000;
+  counter += delta;
+  counterDiv.textContent = `${counter.toFixed(2)} launches`;
+  lastTime = time;
+  requestAnimationFrame(update);
+}
+
+requestAnimationFrame(update);
