@@ -1,6 +1,9 @@
 import exampleIconUrl from "./noun-paperclip-7598668-00449F.png";
 import "./style.css";
 
+//
+// SECTION 1: Data definitions and setup
+//
 interface Item {
   name: string;
   cost: number;
@@ -48,6 +51,9 @@ const availableItems: Item[] = [
   },
 ];
 
+//
+// SECTION 2: Base UI elements
+//
 document.body.innerHTML = `
   <p>Example image asset: <img src="${exampleIconUrl}" class="icon" /></p>
 `;
@@ -67,6 +73,9 @@ const rateDiv = document.createElement("div");
 rateDiv.textContent = `Growth rate: ${growthRate.toFixed(2)} crops/sec`;
 document.body.appendChild(rateDiv);
 
+//
+// SECTION 3: Upgrade system (buttons, descriptions, and event logic)
+//
 const upgradeButtons: HTMLButtonElement[] = [];
 const upgradeStatus: HTMLDivElement[] = [];
 
@@ -106,11 +115,17 @@ for (const item of availableItems) {
   });
 }
 
+//
+// SECTION 4: Manual generation button logic
+//
 generateButton.addEventListener("click", () => {
   resource++;
   resourceDisplay.textContent = `${resource.toFixed(2)} crops harvested`;
 });
 
+//
+// SECTION 5: Game loop (continuous updates and rendering)
+//
 let lastTime = performance.now();
 
 function update(time: number) {
