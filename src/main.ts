@@ -74,16 +74,23 @@ rateDiv.textContent = `Growth rate: ${growthRate.toFixed(2)} crops/sec`;
 document.body.appendChild(rateDiv);
 
 //
-// SECTION 3: Upgrade system (buttons, descriptions, and event logic)
+// SECTION 3: Helper functions
+//
+function updateButtonText(button: HTMLButtonElement, item: Item) {
+  button.textContent = `Buy ${item.name} (${
+    item.cost.toFixed(2)
+  } crops, +${item.rate}/sec)`;
+}
+
+//
+// SECTION 4: Upgrade system (buttons, descriptions, and event logic)
 //
 const upgradeButtons: HTMLButtonElement[] = [];
 const upgradeStatus: HTMLDivElement[] = [];
 
 for (const item of availableItems) {
   const btn = document.createElement("button");
-  btn.textContent = `Buy ${item.name} (${
-    item.cost.toFixed(2)
-  } crops, +${item.rate}/sec)`;
+  updateButtonText(btn, item);
   btn.disabled = true;
   document.body.appendChild(btn);
   upgradeButtons.push(btn);
@@ -108,15 +115,13 @@ for (const item of availableItems) {
       resourceDisplay.textContent = `${resource.toFixed(2)} crops harvested`;
       rateDiv.textContent = `Growth rate: ${growthRate.toFixed(2)} crops/sec`;
       status.textContent = `${item.name}s owned: ${item.count}`;
-      btn.textContent = `Buy ${item.name} (${
-        item.cost.toFixed(2)
-      } crops, +${item.rate}/sec)`;
+      updateButtonText(btn, item);
     }
   });
 }
 
 //
-// SECTION 4: Manual generation button logic
+// SECTION 5: Manual generation button logic
 //
 generateButton.addEventListener("click", () => {
   resource++;
@@ -124,7 +129,7 @@ generateButton.addEventListener("click", () => {
 });
 
 //
-// SECTION 5: Game loop (continuous updates and rendering)
+// SECTION 6: Game loop (continuous updates and rendering)
 //
 let lastTime = performance.now();
 
