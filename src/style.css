@@ -1,5 +1,78 @@
+/* Page background with farm image */
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Segoe UI", sans-serif;
+  margin: 0;
+  padding: 20px;
+
+  background: url("./farm.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  color: #3b2f1b; /* warm brown farm color */
+}
+
+/* General button styling */
+button {
+  display: block;
+  margin: 10px auto;
+  text-align: center;
+  padding: 12px 24px;
+  font-size: 16px;
+
+  background-color: #d8c39a; /* wheat / hay color */
+  border: 2px solid #8b6f47; /* darker brown border */
+  border-radius: 8px;
+  color: #3b2f1b;
+  font-weight: bold;
+
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.25);
+}
+
+button:disabled {
+  opacity: 0.5;
+}
+
+/* Large circular harvest button */
+.harvest-btn {
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+
+  background-color: #9ccb7b; /* soft green farm color */
+  border: 3px solid #5d7d47; /* darker green */
+  font-size: 48px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Text under the emoji */
+.harvest-btn span {
+  font-size: 22px;
+  margin-top: 4px;
+}
+
+/* Item descriptions (beneath upgrade buttons) */
+.description {
+  max-width: 400px;
+  text-align: center;
+  margin-bottom: 10px;
+
+  background: rgba(255, 255, 255, 0.7);
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #bba27a;
+}
+
+/* You removed the icon, but keeping class in case */
 .icon {
-  width: 64px;
-  vertical-align: top;
-  border: 1px solid salmon;
+  display: none;
 }

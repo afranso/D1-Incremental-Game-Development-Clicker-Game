@@ -1,3 +1,15 @@
 # CMPM 121 D1 Project
 
-This is the starting point for your CMPM 121 D1 project. The goal of this project is to create a simple web application using TypeScript, Vite, and modern web development practices. Students should make sure to remove _this_ content from their README.md file and replace it with their own project documentation.
+## Credits
+
+### First Credit
+
+<https://mcarri34.github.io/Demo1CMPM121/>
+
+Used this project as inspiration for the centering my buttons and making the main clicking button larger.
+
+### Second Credit
+
+<https://slashleyonline.github.io/d1/>
+
+I used this project as inspiration to add a cool background to my project so that it looks more in theme with farming.

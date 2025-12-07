@@ -1,4 +1,3 @@
-import exampleIconUrl from "./noun-paperclip-7598668-00449F.png";
 import "./style.css";
 
 //
@@ -54,12 +53,13 @@ const availableItems: Item[] = [
 //
 // SECTION 2: Base UI elements
 //
-document.body.innerHTML = `
-  <p>Example image asset: <img src="${exampleIconUrl}" class="icon" /></p>
-`;
+
+// ❌ REMOVED the example image + text
+document.body.innerHTML = "";
 
 const generateButton = document.createElement("button");
-generateButton.textContent = "🌾 Harvest!";
+generateButton.className = "harvest-btn";
+generateButton.innerHTML = `🌾<span>Harvest</span>`;
 document.body.appendChild(generateButton);
 
 let resource = 0;
@@ -67,10 +67,12 @@ let growthRate = 0;
 
 const resourceDisplay = document.createElement("div");
 resourceDisplay.textContent = `${resource.toFixed(2)} crops harvested`;
+resourceDisplay.style.textAlign = "center";
 document.body.appendChild(resourceDisplay);
 
 const rateDiv = document.createElement("div");
 rateDiv.textContent = `Growth rate: ${growthRate.toFixed(2)} crops/sec`;
+rateDiv.style.textAlign = "center";
 document.body.appendChild(rateDiv);
 
 //
@@ -83,7 +85,7 @@ function updateButtonText(button: HTMLButtonElement, item: Item) {
 }
 
 //
-// SECTION 4: Upgrade system (buttons, descriptions, and event logic)
+// SECTION 4: Upgrade system
 //
 const upgradeButtons: HTMLButtonElement[] = [];
 const upgradeStatus: HTMLDivElement[] = [];
@@ -92,11 +94,13 @@ for (const item of availableItems) {
   const btn = document.createElement("button");
   updateButtonText(btn, item);
   btn.disabled = true;
+  btn.style.textAlign = "center";
   document.body.appendChild(btn);
   upgradeButtons.push(btn);
 
   const status = document.createElement("div");
   status.textContent = `${item.name}s owned: ${item.count}`;
+  status.style.textAlign = "center";
   document.body.appendChild(status);
 
   const desc = document.createElement("div");
@@ -112,6 +116,7 @@ for (const item of availableItems) {
       item.count++;
       growthRate += item.rate;
       item.cost *= 1.15;
+
       resourceDisplay.textContent = `${resource.toFixed(2)} crops harvested`;
       rateDiv.textContent = `Growth rate: ${growthRate.toFixed(2)} crops/sec`;
       status.textContent = `${item.name}s owned: ${item.count}`;
@@ -121,7 +126,7 @@ for (const item of availableItems) {
 }
 
 //
-// SECTION 5: Manual generation button logic
+// SECTION 5: Manual generation button
 //
 generateButton.addEventListener("click", () => {
   resource++;
@@ -129,13 +134,14 @@ generateButton.addEventListener("click", () => {
 });
 
 //
-// SECTION 6: Game loop (continuous updates and rendering)
+// SECTION 6: Game loop
 //
 let lastTime = performance.now();
 
 function update(time: number) {
   const delta = (time - lastTime) / 1000;
   resource += growthRate * delta;
+
   resourceDisplay.textContent = `${resource.toFixed(2)} crops harvested`;
   rateDiv.textContent = `Growth rate: ${growthRate.toFixed(2)} crops/sec`;
 
